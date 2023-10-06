@@ -11,6 +11,11 @@ builder.Services.AddScoped<IPiesRepository, PiesRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 
+builder.Services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>(sp=>ShoppingCartRepository.GetCart(sp));
+builder.Services.AddSession();
+builder.Services.AddHttpContextAccessor();
+
+
 builder.Services.AddDbContext<ShoppingWebAppDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
@@ -20,6 +25,7 @@ builder.Services.AddDbContext<ShoppingWebAppDbContext>(options =>
 var app = builder.Build();
 
 app.UseStaticFiles();     //Middleware for all static files sure as HTML,CSS, JS.
+app.UseSession();
 
 if (app.Environment.IsDevelopment())
 {
@@ -27,5 +33,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapDefaultControllerRoute();   //Endpoint Middleware for routing.
+
+Seeder.Seed(app);
 
 app.Run();

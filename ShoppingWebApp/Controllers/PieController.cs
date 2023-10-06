@@ -18,9 +18,18 @@ namespace ShoppingWebApp.Controllers
         
         public IActionResult List()
         {
-            PieListViewModel pieListViewModel = new PieListViewModel(_piesRepository.AllPies, "Cheese Cake");
+            PieListViewModel pieListViewModel = new PieListViewModel(_piesRepository.AllPies, "All pies");
 
             return View(pieListViewModel);
+        }
+
+        public IActionResult Details(int id)
+        {
+            var pie = _piesRepository.GetPieById(id);
+
+            if(pie == null)
+                return NotFound();
+            return View(pie);
         }
     }
 }

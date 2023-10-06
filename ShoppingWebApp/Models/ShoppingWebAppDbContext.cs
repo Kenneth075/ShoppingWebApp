@@ -11,5 +11,6 @@ namespace ShoppingWebApp.Models
 
         public DbSet<Pies> Pies { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<ShoppingCartItem> ShoppingCartItems { get; set;}
     }
 }
