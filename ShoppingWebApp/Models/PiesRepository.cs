@@ -31,5 +31,10 @@ namespace ShoppingWebApp.Models
         {
             return _shoppingWebAppDbContext.Pies.FirstOrDefault(u => u.PiesId == pieId);
         }
+
+        public IEnumerable<Pies> SearchPies(string SearchQuery)
+        {
+            return _shoppingWebAppDbContext.Pies.Where(u=>u.Name.Contains(SearchQuery));
+        }
     }
 }
