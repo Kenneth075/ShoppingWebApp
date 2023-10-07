@@ -9,6 +9,7 @@ builder.Services.AddControllersWithViews();  //Framework services to enable MVC.
 builder.Services.AddScoped<IPiesRepository, PiesRepository>();
 
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IOrderRepository,  OrderRepository>();
 
 
 builder.Services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>(sp=>ShoppingCartRepository.GetCart(sp));

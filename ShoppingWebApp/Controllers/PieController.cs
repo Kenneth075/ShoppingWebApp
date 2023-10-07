@@ -16,11 +16,30 @@ namespace ShoppingWebApp.Controllers
         }
 
         
-        public IActionResult List()
-        {
-            PieListViewModel pieListViewModel = new PieListViewModel(_piesRepository.AllPies, "All pies");
+        //public IActionResult List()
+        //{
+        //    PieListViewModel pieListViewModel = new PieListViewModel(_piesRepository.AllPies, "All pies");
 
-            return View(pieListViewModel);
+        //    return View(pieListViewModel);
+        //}
+
+        public ViewResult List(string category)
+        {
+            IEnumerable<Pies> pies;
+            string? currentCategory;
+
+            if (string.IsNullOrEmpty(category))
+            {
+                pies = _piesRepository.AllPies.OrderBy(u => u.PiesId);
+                currentCategory = "All pies";
+            }
+            else
+            {
+                pies = _piesRepository.AllPies.Where(u=>u.Category.CategoryName == category).OrderBy(u => u.PiesId);
+                currentCategory = _categoryRepository.AllCategories.FirstOrDefault(u => u.CategoryName == category)?.CategoryName;
+            }
+
+            return View(new PieListViewModel(pies, currentCategory));
         }
 
         public IActionResult Details(int id)
